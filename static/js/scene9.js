@@ -85,11 +85,9 @@ function initScene9() {
       clearAllDialogs();
 
       if (val > 2.5) {
-        showDialog(dialogs.high.text, dialogs.high.pos, dialogs.high.duration);
-        setTimeout(function() { clearAllDialogs(); showBidInput(); }, dialogs.high.duration + 500);
+        showErrorDialog(dialogs.high);
       } else if (val < 2.5) {
-        showDialog(dialogs.low.text, dialogs.low.pos, dialogs.low.duration);
-        setTimeout(function() { clearAllDialogs(); showBidInput(); }, dialogs.low.duration + 500);
+        showErrorDialog(dialogs.low);
       } else {
         showWinSequence();
       }
@@ -97,6 +95,24 @@ function initScene9() {
 
     btn.addEventListener('click', submitBid);
     input.addEventListener('keydown', function(e) { if (e.key === 'Enter') submitBid(); });
+  }
+
+  // 错误提示：点击消失或3秒自动消失
+  function showErrorDialog(d) {
+    clearAllDialogs();
+    showDialog(d.text, d.pos, 0);
+    var errTimer = setTimeout(function() {
+      gameContainer.removeEventListener('click', onErrClick);
+      clearAllDialogs();
+      showBidInput();
+    }, 3000);
+    function onErrClick() {
+      clearTimeout(errTimer);
+      gameContainer.removeEventListener('click', onErrClick);
+      clearAllDialogs();
+      showBidInput();
+    }
+    gameContainer.addEventListener('click', onErrClick);
   }
 
   // ==================== 胜利对话 ====================
