@@ -202,7 +202,7 @@ function initScene2() {
 
     // 触发滑入动画，露出3/5（2/5在屏幕外）
     requestAnimationFrame(() => {
-      trayImg.style.right = '-40%';
+      trayImg.style.right = '-15%';
     });
 
     // 动画完成后提示拖拽

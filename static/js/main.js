@@ -39,12 +39,13 @@ const SCENES = {
       d4:  { text: '唯麻仓土胎质细腻坚白，轻薄透光，方能成御用绝品，你且用心记牢。', pos: 'top', duration: 3000 },
       d5a: { text: '这釉下青线勾勒，着实太难把控了……', pos: 'left', duration: 2000 },
       d5b: { text: '慎手慎笔！平等青料珍稀无比，此宫廷秘法，分毫错不得。', pos: 'top', duration: 3000 },
+      d6:  { text: '全杯通罩透釉，薄浆匀挂，莫积厚浆糊了胎上青线，留心细看，好生学着。', pos: 'top', duration: 4000 },
     },
   },
   2: {
     bg: 's2.png',
     dialogs: {
-      matched: { text: '颜料齐备、次序规整，此番便可静心填彩施色了。', pos: 'center', duration: 4000 },
+      matched: { text: '颜料齐备、次序规整，此番便可静心填彩施色了。', pos: 'left', duration: 4000 },
       colored: { text: '填、点、覆、染，层层施彩，分寸合规，此番器型纹样已然周全。', pos: 'left', duration: 4000 },
       tray:    { text: '诸色釉火温度各有讲究，愿此器入窑无疵，不负窑火、不负天工。', pos: 'left', duration: 4000 },
     },
@@ -229,14 +230,44 @@ function runScene456() {
     { bg: 's6.png', duration: 3000 },
   ];
 
+  let currentIdx = 0;
+  let autoTimer = null;
+  let finished = false;
+
+  function cleanup() {
+    if (finished) return;
+    finished = true;
+    clearTimeout(autoTimer);
+    gameContainer.removeEventListener('click', onClick);
+  }
+
   function play(i) {
+    if (finished) return;
     if (i >= seq.length) {
+      cleanup();
       switchScene(7);
       return;
     }
+    currentIdx = i;
     bgImg.src = `/material/scene/${seq[i].bg}`;
-    setTimeout(() => play(i + 1), seq[i].duration);
+    autoTimer = setTimeout(() => play(i + 1), seq[i].duration);
   }
+
+  function onClick(e) {
+    if (isLocked() || finished) return;
+    e.stopPropagation();
+    clearTimeout(autoTimer);
+    play(currentIdx + 1);
+  }
+
+  // 清理场景3的残留事件
+  if (gameContainer._scene3Handler) {
+    gameContainer.removeEventListener('click', gameContainer._scene3Handler);
+    gameContainer._scene3Handler = null;
+  }
+
+  gameContainer.addEventListener('click', onClick);
+  gameContainer._scene456Handler = onClick;
 
   play(0);
 }

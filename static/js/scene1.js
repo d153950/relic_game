@@ -265,11 +265,16 @@ function initScene1() {
     cupImg.src = '/material/cup/p5.png';
     hideHint();
 
-    // 提示拖拽
+    // 触发对话 d6
+    clearAllDialogs();
+    showDialog(dialogs.d6.text, dialogs.d6.pos, dialogs.d6.duration);
+
+    // 对话消失后进入拖拽阶段
     setTimeout(() => {
+      clearAllDialogs();
       showHint('将杯子拖到右侧窑中');
       enterDragPhase();
-    }, 400);
+    }, dialogs.d6.duration + 500);
 
     cupImg.removeEventListener('click', onClickP4);
   }
