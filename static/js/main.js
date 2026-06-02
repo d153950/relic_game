@@ -50,15 +50,16 @@ function stopBGM() {
 
 function playSFX(src, duration) {
   if (currentSFX) { currentSFX.pause(); currentSFX = null; }
-  currentSFX = new Audio('/sound/' + src);
-  currentSFX.volume = 0.7;
-  currentSFX.play().catch(function() {});
+  var sfx = new Audio('/sound/' + src);
+  sfx.volume = 0.7;
+  currentSFX = sfx;
+  sfx.play().catch(function() {});
   if (duration) {
     setTimeout(function() {
-      if (currentSFX) { currentSFX.pause(); currentSFX = null; }
+      if (sfx) { sfx.pause(); sfx = null; }
     }, duration);
   }
-  return currentSFX;
+  return sfx;
 }
 
 function stopSFX() {

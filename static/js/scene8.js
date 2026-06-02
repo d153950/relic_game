@@ -105,16 +105,17 @@ function initScene8() {
       hideHint();
       lock(500);
 
-      // 所有气泡消失
-      bubbleEls.forEach(el => {
-        el.style.transition = 'opacity 0.6s';
-        el.style.opacity = '0';
-      });
-
+      // 保持2秒再消失
       setTimeout(() => {
-        bubbleEls.forEach(el => el.remove());
-        switchScene(9);
-      }, 800);
+        bubbleEls.forEach(el => {
+          el.style.transition = 'opacity 0.6s';
+          el.style.opacity = '0';
+        });
+        setTimeout(() => {
+          bubbleEls.forEach(el => el.remove());
+          switchScene(9);
+        }, 800);
+      }, 2000);
     }
   }
 }

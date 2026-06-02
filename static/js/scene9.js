@@ -57,13 +57,13 @@ function initScene9() {
     container.addEventListener('click', function(e) { e.stopPropagation(); });
 
     var label = document.createElement('div');
-    label.textContent = '请输入 1.0 ~ 5.0';
+    label.textContent = '请输入 1.6 ~ 4.6';
     label.style.cssText = 'font-family:var(--font-title);font-size:3rem;color:#ffffff;margin-bottom:1.5rem;letter-spacing:0.1em;text-shadow:1px 1px 3px rgba(0,0,0,0.5);';
 
     var input = document.createElement('input');
     input.type = 'number';
-    input.min = '1';
-    input.max = '5';
+    input.min = '1.6';
+    input.max = '4.6';
     input.step = '0.1';
     input.className = 'bid-input';
 
@@ -80,7 +80,7 @@ function initScene9() {
 
     function submitBid() {
       var val = parseFloat(input.value);
-      if (isNaN(val) || val < 1 || val > 5) return;
+      if (isNaN(val) || val < 1.6 || val > 4.6) return;
       container.remove();
       clearAllDialogs();
 
