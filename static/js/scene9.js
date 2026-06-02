@@ -117,6 +117,7 @@ function initScene9() {
 
   // ==================== 胜利对话 ====================
   function showWinSequence() {
+    playSFX('applause.mp3', 5000);
     var winDialogs = [dialogs.win, dialogs.sold, dialogs.cong];
     var wi = 0;
     var wTimer = null;

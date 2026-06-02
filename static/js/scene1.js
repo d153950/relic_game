@@ -235,7 +235,8 @@ function initScene1() {
       cupImg.style.transition = 'opacity 0.8s';
       cupImg.style.opacity = '0';
       dropZone.remove();
-      setTimeout(function() { cupImg.remove(); switchScene(2); }, 800);
+      playSFX('fire.mp3', 3000);
+      setTimeout(function() { cupImg.remove(); switchScene(2); }, 3000);
     });
   }
 }

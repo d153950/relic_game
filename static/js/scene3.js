@@ -120,6 +120,7 @@ function initScene3() {
       cupImg.style.opacity = '0';
       setTimeout(function() { cupImg.remove(); }, 600);
       cupDelivered = true;
+      playSFX('porcelain.mp3', 5000);
       setTimeout(function() {
         showHint('点击屏幕聆听对话');
         gameContainer.addEventListener('click', function startClick() {

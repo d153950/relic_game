@@ -27,6 +27,44 @@ const STATE = {
   locked: false,         // 是否锁定交互
 };
 
+// ==================== 音频系统 ====================
+var bgMusic = null;
+var currentSFX = null;
+
+function playBGM(src) {
+  if (bgMusic) { bgMusic.pause(); bgMusic = null; }
+  bgMusic = new Audio('/sound/' + src);
+  bgMusic.volume = 0.5;
+  bgMusic.currentTime = 17;
+  bgMusic.play().catch(function() {});
+  bgMusic.addEventListener('timeupdate', function() {
+    if (bgMusic.currentTime >= bgMusic.duration - 0.5) {
+      bgMusic.currentTime = 17;
+    }
+  });
+}
+
+function stopBGM() {
+  if (bgMusic) { bgMusic.pause(); bgMusic = null; }
+}
+
+function playSFX(src, duration) {
+  if (currentSFX) { currentSFX.pause(); currentSFX = null; }
+  currentSFX = new Audio('/sound/' + src);
+  currentSFX.volume = 0.7;
+  currentSFX.play().catch(function() {});
+  if (duration) {
+    setTimeout(function() {
+      if (currentSFX) { currentSFX.pause(); currentSFX = null; }
+    }, duration);
+  }
+  return currentSFX;
+}
+
+function stopSFX() {
+  if (currentSFX) { currentSFX.pause(); currentSFX = null; }
+}
+
 // ==================== 场景数据 ====================
 // 所有场景的对话和配置
 const SCENES = {
@@ -245,10 +283,12 @@ function runScene456() {
     if (finished) return;
     if (i >= seq.length) {
       cleanup();
+      stopSFX();
       switchScene(7);
       return;
     }
     currentIdx = i;
+    if (i === 0) playSFX('war.mp3', 9000);
     bgImg.src = `/material/scene/${seq[i].bg}`;
     autoTimer = setTimeout(() => play(i + 1), seq[i].duration);
   }
@@ -321,14 +361,18 @@ function startGame() {
 
 function endGame() {
   switchScreen('ending');
-  // 清理可能的残留
+  stopSFX();
+  playSFX('porcelain2.mp3', 5000);
   clearAllDialogs();
   objectLayer.innerHTML = '';
   uiLayer.innerHTML = '';
 }
 
 // ==================== 事件绑定 ====================
-$('#btn-start').addEventListener('click', startGame);
+$('#btn-start').addEventListener('click', function() {
+  if (!bgMusic) playBGM('background_music.mp3');
+  startGame();
+});
 $('#btn-restart').addEventListener('click', () => {
   switchScreen('start');
 });

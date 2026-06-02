@@ -132,6 +132,7 @@ function initScene7() {
   function completeCleaning() {
     phase = 1;
     hideHint();
+    playSFX('wipe.mp3', 2000);
 
     canvas.style.transition = 'opacity 0.5s';
     canvas.style.opacity = '0';

@@ -7,8 +7,9 @@ import os
 
 app = Flask(__name__)
 
-# 素材目录（直接访问 material 文件夹）
+# 素材目录
 MATERIAL_DIR = os.path.join(os.path.dirname(__file__), 'material')
+SOUND_DIR = os.path.join(os.path.dirname(__file__), 'sound')
 
 
 @app.route('/')
@@ -21,6 +22,12 @@ def index():
 def material(filename):
     """提供素材图片"""
     return send_from_directory(MATERIAL_DIR, filename)
+
+
+@app.route('/sound/<path:filename>')
+def sound(filename):
+    """提供音频文件"""
+    return send_from_directory(SOUND_DIR, filename)
 
 
 if __name__ == '__main__':

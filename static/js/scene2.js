@@ -169,6 +169,7 @@ function initScene2() {
     hideHint();
 
     cupImg.src = '/material/cup/p7.png';
+    playSFX('paint.mp3', 3000);
     clearAllDialogs();
     showDialog(dialogs.colored.text, dialogs.colored.pos, dialogs.colored.duration);
 
@@ -249,6 +250,7 @@ function initScene2() {
         clearAllDialogs();
         showDialog(dialogs.tray.text, dialogs.tray.pos, dialogs.tray.duration);
 
+        playSFX('fire.mp3', 3000);
         setTimeout(() => {
           cupImg.remove();
           trayImg.remove();
