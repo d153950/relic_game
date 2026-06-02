@@ -143,13 +143,14 @@ function initScene7() {
     clearAllDialogs();
     showDialog(dialogs.friend.text, dialogs.friend.pos, dialogs.friend.duration);
 
-    // 友人对话消失后点击触发主角
+    // 友人对话显示期间就可以点击触发主角
+    gameContainer.addEventListener('click', onClickHero);
+    gameContainer._scene7Handler = onClickHero;
+
+    // 3秒后友人对话自动消失
     setTimeout(() => {
       clearAllDialogs();
-      showHint('点击屏幕继续');
-      gameContainer.addEventListener('click', onClickHero);
-      gameContainer._scene7Handler = onClickHero;
-    }, dialogs.friend.duration + 500);
+    }, dialogs.friend.duration + 300);
   }
 
   function onClickHero() {

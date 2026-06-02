@@ -72,8 +72,9 @@ function initScene9() {
     }, 3000);
   }
 
-  function onClickPre() {
+  function onClickPre(e) {
     if (isLocked() || preFinished) return;
+    e.stopPropagation();
     clearTimeout(autoTimer);
     showPreDialog();
   }
@@ -129,6 +130,9 @@ function initScene9() {
     inputContainer.appendChild(input);
     inputContainer.appendChild(btn);
     uiLayer.appendChild(inputContainer);
+
+    // 阻止点击冒泡到gameContainer
+    inputContainer.addEventListener('click', function(e) { e.stopPropagation(); });
 
     input.focus();
 
@@ -194,8 +198,9 @@ function initScene9() {
       }, 3000);
     }
 
-    function onClickWin() {
+    function onClickWin(e) {
       if (isLocked() || winFinished) return;
+      e.stopPropagation();
       clearTimeout(winTimer);
       showWin();
     }
