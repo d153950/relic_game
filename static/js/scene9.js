@@ -43,14 +43,18 @@ function initScene9() {
   // ==================== 前3句对话（点击或3秒自动切换） ====================
   const preDialogs = [dialogs.d1, dialogs.d2, dialogs.d3];
   let autoTimer = null;
+  let preFinished = false;
 
   function startAuctionDialogs() {
     dialogIdx = 0;
+    preFinished = false;
     showPreDialog();
   }
 
   function showPreDialog() {
+    if (preFinished) return;
     if (dialogIdx >= preDialogs.length) {
+      preFinished = true;
       gameContainer.removeEventListener('click', onClickPre);
       gameContainer._scene9Handler = null;
       clearTimeout(autoTimer);
@@ -62,7 +66,6 @@ function initScene9() {
     showDialog(d.text, d.pos, 0);
     dialogIdx++;
 
-    // 3秒后自动切换
     clearTimeout(autoTimer);
     autoTimer = setTimeout(() => {
       showPreDialog();
@@ -70,7 +73,7 @@ function initScene9() {
   }
 
   function onClickPre() {
-    if (isLocked()) return;
+    if (isLocked() || preFinished) return;
     clearTimeout(autoTimer);
     showPreDialog();
   }
@@ -116,9 +119,11 @@ function initScene9() {
     const btn = document.createElement('button');
     btn.textContent = '出价';
     btn.className = 'btn-handdraw';
-    btn.style.marginLeft = '1rem';
-    btn.style.fontSize = '1rem';
-    btn.style.padding = '0.5rem 1.5rem';
+    btn.style.marginLeft = '2rem';
+    btn.style.fontSize = '2.5rem';
+    btn.style.padding = '1rem 3rem';
+    btn.style.color = '#ffffff';
+    btn.style.borderColor = '#ffffff';
 
     inputContainer.appendChild(label);
     inputContainer.appendChild(input);
@@ -161,13 +166,17 @@ function initScene9() {
 
   // ==================== 竞价成功后对话（点击或3秒自动切换） ====================
   let winTimer = null;
+  let winFinished = false;
 
   function showWinSequence() {
     const winDialogs = [dialogs.win, dialogs.sold, dialogs.cong];
     let wi = 0;
+    winFinished = false;
 
     function showWin() {
+      if (winFinished) return;
       if (wi >= winDialogs.length) {
+        winFinished = true;
         gameContainer.removeEventListener('click', onClickWin);
         gameContainer._scene9WinHandler = null;
         clearTimeout(winTimer);
@@ -186,7 +195,7 @@ function initScene9() {
     }
 
     function onClickWin() {
-      if (isLocked()) return;
+      if (isLocked() || winFinished) return;
       clearTimeout(winTimer);
       showWin();
     }
