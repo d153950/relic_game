@@ -35,11 +35,20 @@ function initScene7() {
   objectLayer.appendChild(canvas);
   ctx = canvas.getContext('2d');
 
-  // 加载stain图到Canvas
+  // 加载stain图到Canvas，保存原始像素用于检测
+  var stainOriginalData = null;
+  var totalStainPixels = 0;
   const stainImg = new Image();
   stainImg.src = '/material/stain.png';
   stainImg.onload = () => {
     ctx.drawImage(stainImg, 0, 0, canvas.width, canvas.height);
+    // 保存原始stain像素数据
+    var origData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    stainOriginalData = new Uint8Array(origData.data.length);
+    for (var j = 0; j < origData.data.length; j += 4) {
+      stainOriginalData[j + 3] = origData.data[j + 3];
+      if (origData.data[j + 3] > 30) totalStainPixels++;
+    }
   };
 
   showHint('用鼠标涂抹，清理杯上污渍');
@@ -105,15 +114,16 @@ function initScene7() {
   }
 
   function checkCoverage() {
+    if (!stainOriginalData || totalStainPixels === 0) return;
     const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    let cleared = 0;
-    let total = 0;
-    for (let i = 0; i < data.data.length; i += 16) {
-      total++;
-      if (data.data[i + 3] < 30) cleared++;
+    var cleared = 0;
+    // 只统计原始有stain的像素
+    for (var i = 0; i < data.data.length; i += 4) {
+      if (stainOriginalData[i + 3] > 30) {
+        if (data.data[i + 3] < 30) cleared++;
+      }
     }
-    if (total > 0 && cleared / total >= 0.80) {
-      // 防止重复触发
+    if (cleared / totalStainPixels >= 0.80) {
       if (phase !== 0) return;
       completeCleaning();
     }
