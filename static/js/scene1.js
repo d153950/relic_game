@@ -78,7 +78,7 @@ function initScene1() {
 
     lineImg = document.createElement('img');
     lineImg.src = '/material/line.png';
-    lineImg.style.cssText = 'position:absolute;left:' + (rect.left - cr.left) + 'px;top:' + (rect.top - cr.top) + 'px;width:' + rect.width + 'px;height:' + rect.height + 'px;pointer-events:none;z-index:3;';
+    lineImg.style.cssText = 'position:absolute;left:' + (rect.left - cr.left) + 'px;top:' + (rect.top - cr.top) + 'px;width:' + rect.width + 'px;height:' + rect.height + 'px;pointer-events:none;z-index:3;opacity:0.6;';
     objectLayer.appendChild(lineImg);
 
     canvas = document.createElement('canvas');

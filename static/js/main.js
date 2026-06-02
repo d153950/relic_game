@@ -363,7 +363,8 @@ function startGame() {
 function endGame() {
   switchScreen('ending');
   stopSFX();
-  playSFX('porcelain2.mp3', 5000);
+  var sfx = playSFX('porcelain2.mp3', 5000);
+  if (sfx) sfx.volume = 1.0;
   clearAllDialogs();
   objectLayer.innerHTML = '';
   uiLayer.innerHTML = '';
