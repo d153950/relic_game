@@ -345,11 +345,11 @@ html, body {
   background: var(--paper);
   border: 1.5px solid var(--gold);
   border-radius: 8px 2px 8px 2px;
-  padding: 0.8rem 1rem;
-  max-width: 380px;
+  padding: 1.2rem 1.5rem;
+  max-width: 560px;
   width: 80%;
   cursor: grab;
-  font-size: 0.85rem;
+  font-size: 1.25rem;
   line-height: 1.6;
   box-shadow: 1px 2px 8px rgba(0,0,0,0.1);
   transition: box-shadow 0.3s;
@@ -369,7 +369,7 @@ html, body {
 .sort-bubble .bubble-year {
   font-weight: 700;
   color: var(--vermillion);
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 /* ============================================

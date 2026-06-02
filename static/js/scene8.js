@@ -4,6 +4,9 @@
    ============================================ */
 
 function initScene8() {
+  // 确保背景已设置
+  bgImg.src = '/material/scene/s8.png';
+
   const BUBBLES = [
     {
       id: 1,

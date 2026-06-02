@@ -52,7 +52,6 @@ function initScene3() {
     clothDragged = true;
     totalDx = 0;
     clothImg.style.cursor = 'grabbing';
-    clothImg.style.transition = 'none';
 
     function onMove(ev) {
       if (!clothDragged) return;
@@ -221,7 +220,13 @@ function initScene3() {
 
       setTimeout(() => {
         showHint('点击屏幕，聆听对话');
-        startDialogSequence();
+        // 等用户点击才触发第一句
+        function startOnClick() {
+          gameContainer.removeEventListener('click', startOnClick);
+          startDialogSequence();
+        }
+        gameContainer.addEventListener('click', startOnClick);
+        gameContainer._scene3StartHandler = startOnClick;
       }, 900);
     });
   }
@@ -251,7 +256,7 @@ function initScene3() {
     gameContainer.addEventListener('click', nextDialog);
     gameContainer._scene3Handler = nextDialog;
 
-    // 自动显示第一句
-    setTimeout(() => nextDialog(), 500);
+    // 立即显示第一句
+    nextDialog();
   }
 }

@@ -172,12 +172,16 @@ function initScene2() {
     clearAllDialogs();
     showDialog(dialogs.colored.text, dialogs.colored.pos, dialogs.colored.duration);
 
-    // tray 从右侧滑入
-    setTimeout(() => {
-      enterTrayPhase();
-    }, dialogs.colored.duration + 500);
-
     cupImg.removeEventListener('click', onClickCup);
+
+    // 点击 p7 才触发托盘滑入
+    cupImg.addEventListener('click', function onClickP7() {
+      if (isLocked()) return;
+      lock(500);
+      clearAllDialogs();
+      cupImg.removeEventListener('click', onClickP7);
+      enterTrayPhase();
+    });
   });
 
   // ==================== tray 滑入 + 拖拽 p7 ====================

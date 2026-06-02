@@ -70,14 +70,14 @@ function initScene9() {
     inputContainer.style.cssText = `
       position: absolute;
       left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+      bottom: 12%;
+      transform: translateX(-50%);
       z-index: 10;
       text-align: center;
     `;
 
     const label = document.createElement('div');
-    label.textContent = '请输入竞价（1~5亿，一位小数）';
+    label.textContent = '请输入 1.0 ~ 5.0';
     label.style.cssText = `
       font-family: var(--font-body);
       font-size: 1.2rem;
@@ -91,7 +91,7 @@ function initScene9() {
     input.max = '5';
     input.step = '0.1';
     input.className = 'bid-input';
-    input.placeholder = '2.5';
+    input.placeholder = '';
 
     const btn = document.createElement('button');
     btn.textContent = '出价';

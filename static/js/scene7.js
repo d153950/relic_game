@@ -1,6 +1,6 @@
 /* ============================================
    场景7: 民国富豪工作室 — 清理污渍鉴宝
-   交互: Canvas 擦除污渍 → 点击对话
+   交互: Canvas擦除污渍 → 点击对话
    ============================================ */
 
 function initScene7() {
@@ -21,6 +21,7 @@ function initScene7() {
   const cupRect = cupImg.getBoundingClientRect();
   const containerRect = gameContainer.getBoundingClientRect();
 
+  // Canvas：画stain，鼠标擦除
   canvas = document.createElement('canvas');
   canvas.className = 'brush-canvas';
   canvas.width = cupRect.width;
@@ -34,11 +35,11 @@ function initScene7() {
   objectLayer.appendChild(canvas);
   ctx = canvas.getContext('2d');
 
-  // 在 Canvas 上绘制污渍
-  const stainImage = new Image();
-  stainImage.src = '/material/stain.png';
-  stainImage.onload = () => {
-    ctx.drawImage(stainImage, 0, 0, canvas.width, canvas.height);
+  // 加载stain图到Canvas
+  const stainImg = new Image();
+  stainImg.src = '/material/stain.png';
+  stainImg.onload = () => {
+    ctx.drawImage(stainImg, 0, 0, canvas.width, canvas.height);
   };
 
   showHint('用鼠标涂抹，清理杯上污渍');
@@ -79,7 +80,7 @@ function initScene7() {
     const pos = getPos(e);
     ctx.beginPath();
     ctx.moveTo(pos.x, pos.y);
-    ctx.lineWidth = 40;
+    ctx.lineWidth = 50;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
   }
