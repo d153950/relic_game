@@ -80,7 +80,7 @@ function initScene7() {
     const pos = getPos(e);
     ctx.beginPath();
     ctx.moveTo(pos.x, pos.y);
-    ctx.lineWidth = 50;
+    ctx.lineWidth = 30;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
   }
@@ -113,6 +113,8 @@ function initScene7() {
       if (data.data[i + 3] < 30) cleared++;
     }
     if (total > 0 && cleared / total >= 0.80) {
+      // 防止重复触发
+      if (phase !== 0) return;
       completeCleaning();
     }
   }
@@ -127,14 +129,27 @@ function initScene7() {
 
     setTimeout(() => {
       clearAllDialogs();
-      showDialog(dialogs.friend.text, dialogs.friend.pos, dialogs.friend.duration);
-      setTimeout(() => {
-        clearAllDialogs();
-        showHint('点击屏幕继续');
-        gameContainer.addEventListener('click', onClickHero);
-        gameContainer._scene7Handler = onClickHero;
-      }, dialogs.friend.duration + 500);
+      showHint('点击屏幕继续');
+      gameContainer.addEventListener('click', onClickFriend);
+      gameContainer._scene7Handler = onClickFriend;
     }, 600);
+  }
+
+  function onClickFriend() {
+    if (isLocked()) return;
+    gameContainer.removeEventListener('click', onClickFriend);
+    hideHint();
+
+    clearAllDialogs();
+    showDialog(dialogs.friend.text, dialogs.friend.pos, dialogs.friend.duration);
+
+    // 友人对话消失后点击触发主角
+    setTimeout(() => {
+      clearAllDialogs();
+      showHint('点击屏幕继续');
+      gameContainer.addEventListener('click', onClickHero);
+      gameContainer._scene7Handler = onClickHero;
+    }, dialogs.friend.duration + 500);
   }
 
   function onClickHero() {
@@ -146,7 +161,20 @@ function initScene7() {
     clearAllDialogs();
     showDialog(dialogs.hero.text, dialogs.hero.pos, dialogs.hero.duration);
 
+    // 主角对话期间点击可直接切换
+    gameContainer.addEventListener('click', function skipToNext() {
+      gameContainer.removeEventListener('click', skipToNext);
+      clearAllDialogs();
+      switchScene(8);
+    });
+    gameContainer._scene7SkipHandler = skipToNext;
+
+    // 对话消失后自动切换
     setTimeout(() => {
+      if (gameContainer._scene7SkipHandler) {
+        gameContainer.removeEventListener('click', gameContainer._scene7SkipHandler);
+        gameContainer._scene7SkipHandler = null;
+      }
       clearAllDialogs();
       switchScene(8);
     }, dialogs.hero.duration + 500);

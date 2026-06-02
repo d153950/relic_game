@@ -62,8 +62,9 @@ function initScene3() {
       // 只允许向左移动
       if (dx < 0) {
         const containerRect = gameContainer.getBoundingClientRect();
-        const currentLeft = parseFloat(clothImg.style.left) || (clothImg.getBoundingClientRect().left - containerRect.left);
-        clothImg.style.left = `${currentLeft + dx}px`;
+        const rect = clothImg.getBoundingClientRect();
+        clothImg.style.left = `${rect.left - containerRect.left + dx}px`;
+        clothImg.style.top = `${rect.top - containerRect.top}px`;
         clothImg.style.transform = 'none';
       }
 
@@ -111,8 +112,9 @@ function initScene3() {
       clothStartX = t2.clientX;
       if (dx < 0) {
         const containerRect = gameContainer.getBoundingClientRect();
-        const currentLeft = parseFloat(clothImg.style.left) || (clothImg.getBoundingClientRect().left - containerRect.left);
-        clothImg.style.left = `${currentLeft + dx}px`;
+        const rect = clothImg.getBoundingClientRect();
+        clothImg.style.left = `${rect.left - containerRect.left + dx}px`;
+        clothImg.style.top = `${rect.top - containerRect.top}px`;
         clothImg.style.transform = 'none';
       }
       const cupRect = cupImg.getBoundingClientRect();

@@ -23,10 +23,14 @@ function initScene9() {
     right: 5%;
     top: 5%;
     font-family: var(--font-title);
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     color: var(--vermillion);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
     z-index: 5;
+    padding: 0.5rem 1.5rem;
+    background: var(--paper);
+    border: 2px dashed var(--ink);
+    border-radius: 6px;
   `;
   timeLabel.textContent = '2014年4月8日';
   uiLayer.appendChild(timeLabel);
@@ -36,30 +40,44 @@ function initScene9() {
     startAuctionDialogs();
   }, 2000);
 
-  // ==================== 前3句对话 ====================
+  // ==================== 前3句对话（点击或3秒自动切换） ====================
   const preDialogs = [dialogs.d1, dialogs.d2, dialogs.d3];
+  let autoTimer = null;
 
   function startAuctionDialogs() {
     dialogIdx = 0;
-
-    function nextDialog() {
-      if (isLocked()) return;
-      if (dialogIdx >= preDialogs.length) {
-        gameContainer.removeEventListener('click', nextDialog);
-        gameContainer._scene9Handler = null;
-        showBidInput();
-        return;
-      }
-      clearAllDialogs();
-      const d = preDialogs[dialogIdx];
-      showDialog(d.text, d.pos, d.duration);
-      dialogIdx++;
-    }
-
-    gameContainer.addEventListener('click', nextDialog);
-    gameContainer._scene9Handler = nextDialog;
-    nextDialog();
+    showPreDialog();
   }
+
+  function showPreDialog() {
+    if (dialogIdx >= preDialogs.length) {
+      gameContainer.removeEventListener('click', onClickPre);
+      gameContainer._scene9Handler = null;
+      clearTimeout(autoTimer);
+      showBidInput();
+      return;
+    }
+    clearAllDialogs();
+    const d = preDialogs[dialogIdx];
+    showDialog(d.text, d.pos, 0);
+    dialogIdx++;
+
+    // 3秒后自动切换
+    clearTimeout(autoTimer);
+    autoTimer = setTimeout(() => {
+      showPreDialog();
+    }, 3000);
+  }
+
+  function onClickPre() {
+    if (isLocked()) return;
+    clearTimeout(autoTimer);
+    showPreDialog();
+  }
+
+  gameContainer.addEventListener('click', onClickPre);
+  gameContainer._scene9Handler = onClickPre;
+  showPreDialog();
 
   // ==================== 输入框 ====================
   function showBidInput() {
@@ -79,10 +97,12 @@ function initScene9() {
     const label = document.createElement('div');
     label.textContent = '请输入 1.0 ~ 5.0';
     label.style.cssText = `
-      font-family: var(--font-body);
-      font-size: 1.2rem;
-      color: var(--ink);
-      margin-bottom: 0.8rem;
+      font-family: var(--font-title);
+      font-size: 3rem;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.1em;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
     `;
 
     const input = document.createElement('input');
@@ -139,25 +159,40 @@ function initScene9() {
     });
   }
 
-  // ==================== 竞价成功后对话 ====================
+  // ==================== 竞价成功后对话（点击或3秒自动切换） ====================
+  let winTimer = null;
+
   function showWinSequence() {
     const winDialogs = [dialogs.win, dialogs.sold, dialogs.cong];
-    let i = 0;
+    let wi = 0;
 
-    function next() {
-      if (i >= winDialogs.length) {
-        gameContainer.removeEventListener('click', next);
+    function showWin() {
+      if (wi >= winDialogs.length) {
+        gameContainer.removeEventListener('click', onClickWin);
+        gameContainer._scene9WinHandler = null;
+        clearTimeout(winTimer);
         setTimeout(() => switchScene(10), 2000);
         return;
       }
       clearAllDialogs();
-      const d = winDialogs[i];
-      showDialog(d.text, d.pos, d.duration, { big: d.big });
-      i++;
+      const d = winDialogs[wi];
+      showDialog(d.text, d.pos, 0, { big: d.big });
+      wi++;
+
+      clearTimeout(winTimer);
+      winTimer = setTimeout(() => {
+        showWin();
+      }, 3000);
     }
 
-    gameContainer.addEventListener('click', next);
-    gameContainer._scene9WinHandler = next;
-    next();
+    function onClickWin() {
+      if (isLocked()) return;
+      clearTimeout(winTimer);
+      showWin();
+    }
+
+    gameContainer.addEventListener('click', onClickWin);
+    gameContainer._scene9WinHandler = onClickWin;
+    showWin();
   }
 }

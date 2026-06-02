@@ -75,7 +75,7 @@ const SCENES = {
       d3: { text: '两亿！此物流落海外太久，我志在必得！', pos: 'right', duration: 5000 },
       low:  { text: '价位节节走高，我若出价保守，恐无缘这件至宝。', pos: 'bottom', duration: 3000 },
       high: { text: '若以此价居高不下，囊中银两怕是难以接续。', pos: 'bottom', duration: 3000 },
-      win:  { text: '两亿五千万，我收，迎此杯回归中土！', pos: 'center', duration: 5000, big: true },
+      win:  { text: '两亿五千万，我收，迎此杯回归中土！', pos: 'bottom', duration: 5000, big: true },
       sold: { text: '落槌！两亿五千万港元，含佣金合计逾二点八亿港元，创下历来中国古代瓷器拍卖新高！', pos: 'top', duration: 5000 },
       cong: { text: '恭喜刘益谦先生！', pos: 'top', duration: 5000 },
     },
@@ -274,13 +274,6 @@ function runScene456() {
 
 // ==================== 场景10: 博物馆 ====================
 function initScene10() {
-  // 展示成品杯
-  createObject('p8.png', 'cup-final', {
-    x: '50%', y: '40%',
-    transform: 'translate(-50%, -50%)',
-    width: 'min(500px, 50vw)',
-  });
-
   const dialogs = SCENES[10].dialogs;
   let idx = 0;
   let finished = false;

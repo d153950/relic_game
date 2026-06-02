@@ -240,9 +240,9 @@ html, body {
 .dialog.center { left: 50%; top: 50%; transform: translate(-50%, -50%); }
 
 .dialog.big {
-  font-size: 1.3rem;
+  font-size: 2rem;
   font-weight: 700;
-  max-width: 450px;
+  max-width: 680px;
   text-align: center;
   color: var(--vermillion);
 }
@@ -377,14 +377,14 @@ html, body {
    ============================================ */
 .bid-input {
   font-family: var(--font-title);
-  font-size: 1.5rem;
+  font-size: 4.5rem;
   text-align: center;
-  width: 120px;
-  padding: 0.5rem;
-  border: 2px dashed var(--ink);
+  width: 360px;
+  padding: 1.5rem;
+  border: 3px dashed var(--ink);
   background: var(--paper);
   color: var(--ink);
-  border-radius: 4px;
+  border-radius: 8px;
   outline: none;
   transition: border-color 0.3s;
 }
