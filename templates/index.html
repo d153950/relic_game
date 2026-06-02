@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>鸡缸杯·六百年</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============ 开始界面 ============ -->
+  <div id="start-screen" class="screen">
+    <div class="cup-wrapper">
+      <img class="cup-img" src="/material/cup/p8.png" alt="鸡缸杯">
+    </div>
+    <h1 class="title">鸡 缸 杯 · 六 百 年</h1>
+    <div class="divider"></div>
+    <p class="subtitle">一场跨越六百年的古今对话</p>
+    <button class="btn-handdraw" id="btn-start">触 摸 此 杯 ， 开 启 尘 缘</button>
+    <div class="bottom-ornament"></div>
+  </div>
+
+  <!-- ============ 游戏主容器 ============ -->
+  <div id="game-container" class="screen hidden">
+
+    <!-- 背景层 -->
+    <div id="bg-layer" class="layer">
+      <img id="bg-img" src="" alt="">
+    </div>
+
+    <!-- 操作对象层 -->
+    <div id="object-layer" class="layer"></div>
+
+    <!-- 对话框层 -->
+    <div id="dialog-layer" class="layer"></div>
+
+    <!-- UI 层（输入框等） -->
+    <div id="ui-layer" class="layer"></div>
+
+    <!-- 提示文字 -->
+    <div id="hint" class="hint-text hidden"></div>
+  </div>
+
+  <!-- ============ 通关界面 ============ -->
+  <div id="ending-screen" class="screen hidden">
+    <!-- 墨点粒子 -->
+    <div class="ink-particle"></div>
+    <div class="ink-particle"></div>
+    <div class="ink-particle"></div>
+    <div class="ink-particle"></div>
+    <div class="ink-particle"></div>
+    <div class="ink-particle"></div>
+
+    <div class="cup-wrapper">
+      <img class="cup-img" src="/material/cup/p8.png" alt="鸡缸杯">
+    </div>
+    <h2 class="ending-title">尘 缘 已 了 ， 匠 心 永 存</h2>
+    <p class="ending-line">方寸小杯，凝着古法匠心</p>
+    <p class="ending-line">六百年家国归途，尽在其中</p>
+    <p class="congrats">★ 恭 喜 通 关 ★</p>
+    <button class="btn-handdraw" id="btn-restart">再 品 一 回</button>
+  </div>
+
+  <!-- 场景切换覆盖层 -->
+  <div id="fade-overlay"></div>
+
+</div>
+
+<script src="/static/js/scene1.js"></script>
+<script src="/static/js/main.js"></script>
+</body>
+</html>
