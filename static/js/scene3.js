@@ -44,56 +44,38 @@ function initScene3() {
   // ==================== 拖拽红布（向左） ====================
   let clothStartX = 0;
   let clothDragged = false;
+  let totalDx = 0;
 
-  clothImg.addEventListener('dragstart', (e) => {
-    clothStartX = e.clientX;
-    clothDragged = true;
-    e.dataTransfer.setData('text/plain', 'cloth');
-    e.dataTransfer.effectAllowed = 'move';
-  });
-
-  clothImg.addEventListener('drag', (e) => {
-    if (e.clientX === 0) return; // 忽略无效事件
-    // 只允许向左移动
-    const dx = e.clientX - clothStartX;
-    if (dx < 0) {
-      clothImg.style.left = `${clothImg.getBoundingClientRect().left + dx - gameContainer.getBoundingClientRect().left}px`;
-      clothImg.style.top = `${clothImg.getBoundingClientRect().top - gameContainer.getBoundingClientRect().top}px`;
-      clothImg.style.transform = 'none';
-      clothStartX = e.clientX;
-    }
-  });
-
-  clothImg.addEventListener('dragend', (e) => {
-    if (!clothDragged) return;
-    clothDragged = false;
-
-    // 检查红布是否移出杯子区域足够远
-    const cupRect = cupImg.getBoundingClientRect();
-    const clothRect = clothImg.getBoundingClientRect();
-    const cupCenterX = cupRect.left + cupRect.width / 2;
-
-    // 红布左边缘超过杯子左边缘即视为揭开
-    if (clothRect.right < cupCenterX) {
-      removeCloth();
-    }
-  });
-
-  // 也支持直接点击拖拽（mousedown/mousemove 作为备选）
   clothImg.addEventListener('mousedown', (e) => {
+    e.preventDefault();
     clothStartX = e.clientX;
     clothDragged = true;
+    totalDx = 0;
     clothImg.style.cursor = 'grabbing';
+    clothImg.style.transition = 'none';
 
     function onMove(ev) {
       if (!clothDragged) return;
       const dx = ev.clientX - clothStartX;
+      totalDx += dx;
+      clothStartX = ev.clientX;
+
+      // 只允许向左移动
       if (dx < 0) {
         const containerRect = gameContainer.getBoundingClientRect();
-        clothImg.style.left = `${ev.clientX - containerRect.left - clothImg.offsetWidth / 2}px`;
-        clothImg.style.top = `${ev.clientY - containerRect.top - clothImg.offsetHeight / 2}px`;
+        const currentLeft = parseFloat(clothImg.style.left) || (clothImg.getBoundingClientRect().left - containerRect.left);
+        clothImg.style.left = `${currentLeft + dx}px`;
         clothImg.style.transform = 'none';
-        clothStartX = ev.clientX;
+      }
+
+      // 向左拖动超过杯子宽度一半就消失
+      const cupRect = cupImg.getBoundingClientRect();
+      if (totalDx < -(cupRect.width * 0.4)) {
+        clothDragged = false;
+        clothImg.style.cursor = 'grab';
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        removeCloth();
       }
     }
 
@@ -104,14 +86,57 @@ function initScene3() {
       document.removeEventListener('mouseup', onUp);
 
       const cupRect = cupImg.getBoundingClientRect();
-      const clothRect = clothImg.getBoundingClientRect();
-      if (clothRect.right < cupRect.left + cupRect.width * 0.5) {
+      if (totalDx < -(cupRect.width * 0.3)) {
         removeCloth();
       }
     }
 
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onUp);
+  });
+
+  // 触摸支持
+  clothImg.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    const t = e.touches[0];
+    clothStartX = t.clientX;
+    clothDragged = true;
+    totalDx = 0;
+    clothImg.style.transition = 'none';
+
+    function onMove(ev) {
+      if (!clothDragged) return;
+      const t2 = ev.touches[0];
+      const dx = t2.clientX - clothStartX;
+      totalDx += dx;
+      clothStartX = t2.clientX;
+      if (dx < 0) {
+        const containerRect = gameContainer.getBoundingClientRect();
+        const currentLeft = parseFloat(clothImg.style.left) || (clothImg.getBoundingClientRect().left - containerRect.left);
+        clothImg.style.left = `${currentLeft + dx}px`;
+        clothImg.style.transform = 'none';
+      }
+      const cupRect = cupImg.getBoundingClientRect();
+      if (totalDx < -(cupRect.width * 0.4)) {
+        clothDragged = false;
+        document.removeEventListener('touchmove', onMove);
+        document.removeEventListener('touchend', onUp);
+        removeCloth();
+      }
+    }
+
+    function onUp() {
+      clothDragged = false;
+      document.removeEventListener('touchmove', onMove);
+      document.removeEventListener('touchend', onUp);
+      const cupRect = cupImg.getBoundingClientRect();
+      if (totalDx < -(cupRect.width * 0.3)) {
+        removeCloth();
+      }
+    }
+
+    document.addEventListener('touchmove', onMove, { passive: false });
+    document.addEventListener('touchend', onUp);
   });
 
   function removeCloth() {

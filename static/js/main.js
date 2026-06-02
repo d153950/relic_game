@@ -278,15 +278,20 @@ function initScene10() {
   createObject('p8.png', 'cup-final', {
     x: '50%', y: '40%',
     transform: 'translate(-50%, -50%)',
-    width: 'min(200px, 30vw)',
+    width: 'min(500px, 50vw)',
   });
 
   const dialogs = SCENES[10].dialogs;
   let idx = 0;
+  let finished = false;
 
   function nextDialog() {
-    if (isLocked()) return;
+    if (isLocked() || finished) return;
     if (idx >= dialogs.length) {
+      finished = true;
+      gameContainer.removeEventListener('click', nextDialog);
+      gameContainer._scene10Handler = null;
+      clearAllDialogs();
       // 最后一句后通关
       setTimeout(() => endGame(), 2000);
       return;
@@ -297,9 +302,18 @@ function initScene10() {
     idx++;
   }
 
+  // 清理之前场景的残留事件
+  if (gameContainer._scene9Handler) {
+    gameContainer.removeEventListener('click', gameContainer._scene9Handler);
+    gameContainer._scene9Handler = null;
+  }
+  if (gameContainer._scene9WinHandler) {
+    gameContainer.removeEventListener('click', gameContainer._scene9WinHandler);
+    gameContainer._scene9WinHandler = null;
+  }
+
   // 点击任意位置推进
-  gameContainer.addEventListener('click', nextDialog, { once: false });
-  // 存储引用以便清理
+  gameContainer.addEventListener('click', nextDialog);
   gameContainer._scene10Handler = nextDialog;
 
   // 显示第一条

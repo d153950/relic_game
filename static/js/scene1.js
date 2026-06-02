@@ -44,15 +44,20 @@ function initScene1() {
 
     hideHint();
     currentPhase = 1;
-    // 替换事件监听
     cupImg.removeEventListener('click', onClickP1);
-    cupImg.addEventListener('click', onClickP2);
+    // 等对话1和对话2都消失后才能点击p2
+    // 对话1=3s, 对话2在1s后出现持续3s, 总共4s后都消失
+    setTimeout(() => {
+      cupImg.addEventListener('click', onClickP2);
+      showHint('点击杯子继续');
+    }, 4500);
   });
 
   // ==================== 阶段1: 点击 p2 → p3 ====================
   function onClickP2() {
     if (isLocked()) return;
     lock(500);
+    hideHint();
 
     // p2 → p3
     cupImg.src = '/material/cup/p3.png';
@@ -265,16 +270,13 @@ function initScene1() {
     cupImg.src = '/material/cup/p5.png';
     hideHint();
 
-    // 触发对话 d6
+    // 触发对话 d6（不阻塞拖拽）
     clearAllDialogs();
     showDialog(dialogs.d6.text, dialogs.d6.pos, dialogs.d6.duration);
 
-    // 对话消失后进入拖拽阶段
-    setTimeout(() => {
-      clearAllDialogs();
-      showHint('将杯子拖到右侧窑中');
-      enterDragPhase();
-    }, dialogs.d6.duration + 500);
+    // 同时就可以拖拽
+    showHint('将杯子拖到右侧窑中');
+    enterDragPhase();
 
     cupImg.removeEventListener('click', onClickP4);
   }
