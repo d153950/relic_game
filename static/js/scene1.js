@@ -27,7 +27,7 @@ function initScene1() {
   cupImg.addEventListener('click', function step0() {
     if (isLocked()) return;
     cupImg.removeEventListener('click', step0);
-    cupImg.src = '/material/cup/p2.png';
+    cupImg.src = 'material/cup/p2.png';
     hideHint();
     showHint('再次点击杯子');
     // 步骤1: 再次点击 -> 对话1
@@ -48,7 +48,7 @@ function initScene1() {
         // 步骤3: 点击 -> p3 + 对话3
         gameContainer.addEventListener('click', function step3() {
           gameContainer.removeEventListener('click', step3);
-          cupImg.src = '/material/cup/p3.png';
+          cupImg.src = 'material/cup/p3.png';
           clearAllDialogs();
           showDialog(dialogs.d3.text, dialogs.d3.pos, 0);
           // 步骤4: 点击 -> 对话4(替换对话3)
@@ -77,7 +77,7 @@ function initScene1() {
     var cr = gameContainer.getBoundingClientRect();
 
     lineImg = document.createElement('img');
-    lineImg.src = '/material/line.png';
+    lineImg.src = 'material/line.png';
     lineImg.style.cssText = 'position:absolute;left:' + (rect.left - cr.left) + 'px;top:' + (rect.top - cr.top) + 'px;width:' + rect.width + 'px;height:' + rect.height + 'px;pointer-events:none;z-index:3;opacity:0.6;';
     objectLayer.appendChild(lineImg);
 
@@ -187,14 +187,14 @@ function initScene1() {
     hideHint();
     if (lineImg) { lineImg.style.transition = 'opacity 0.5s'; lineImg.style.opacity = '0'; setTimeout(function() { lineImg.remove(); }, 500); }
     if (canvas) { canvas.style.transition = 'opacity 0.5s'; canvas.style.opacity = '0'; setTimeout(function() { canvas.remove(); }, 500); }
-    cupImg.src = '/material/cup/p4.png';
+    cupImg.src = 'material/cup/p4.png';
     setTimeout(function() {
       showHint('点击杯子继续');
       cupImg.addEventListener('click', function clickP4() {
         if (isLocked() || currentPhase !== 3) return;
         cupImg.removeEventListener('click', clickP4);
         hideHint();
-        cupImg.src = '/material/cup/p5.png';
+        cupImg.src = 'material/cup/p5.png';
         clearAllDialogs();
         showDialog(dialogs.d6.text, dialogs.d6.pos, dialogs.d6.duration);
         showHint('将杯子拖到右侧窑中');

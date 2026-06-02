@@ -168,7 +168,7 @@ function initScene2() {
     lock(500);
     hideHint();
 
-    cupImg.src = '/material/cup/p7.png';
+    cupImg.src = 'material/cup/p7.png';
     playSFX('paint.mp3', 3000);
     clearAllDialogs();
     showDialog(dialogs.colored.text, dialogs.colored.pos, dialogs.colored.duration);
@@ -191,7 +191,7 @@ function initScene2() {
 
     // 创建托盘
     trayImg = document.createElement('img');
-    trayImg.src = '/material/tray.png';
+    trayImg.src = 'material/tray.png';
     trayImg.id = 'tray-s2';
     trayImg.style.cssText = `
       position: absolute;
