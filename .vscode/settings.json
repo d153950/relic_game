@@ -1,0 +1,19 @@
+{
+     // 通用运行配置（不写死Python路径，自动用你选的解释器）
+     "code-runner.runInTerminal": true,
+     "code-runner.clearPreviousOutput": true,
+     "code-runner.executorMap": {
+         "python": "python -u $fullFileName"
+     },
+     // 彻底解决Windows所有Python中文乱码问题
+     "terminal.integrated.defaultProfile.windows": "Command Prompt",
+     "terminal.integrated.env.windows": {
+         "PYTHONIOENCODING": "utf-8"
+     },
+     // Python智能提示与语法检查（所有版本通用）
+     "python.analysis.typeCheckingMode": "basic",
+     "python.analysis.autoImportCompletions": true,
+     // 自动保存，不用每次手动按Ctrl+S
+     "files.autoSave": "afterDelay",
+     "files.autoSaveDelay": 1000
+ }
