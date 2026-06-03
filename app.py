@@ -33,4 +33,5 @@ def sound(filename):
 if __name__ == '__main__':
     print("🔥 鸡缸杯·六百年 启动中...")
     print("   打开浏览器访问: http://localhost:5000")
+    print("   内网用户访问: http://你的IP地址:5000")
     app.run(debug=True, host='0.0.0.0', port=5000)
