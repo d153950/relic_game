@@ -236,7 +236,7 @@ html, body {
 .dialog.left   { left: 5%;  top: 50%; transform: translateY(-50%) rotate(-0.5deg); }
 .dialog.right  { right: 5%; top: 50%; transform: translateY(-50%) rotate(0.5deg); }
 .dialog.top    { left: 50%; top: 8%;  transform: translateX(-50%) rotate(-0.3deg); }
-.dialog.bottom { left: 50%; bottom: 8%; transform: translateX(-50%) rotate(0.3deg); }
+.dialog.bottom { left: 50%; bottom: 14%; transform: translateX(-50%) rotate(0.3deg); }
 .dialog.center { left: 50%; top: 50%; transform: translate(-50%, -50%); }
 
 .dialog.big {

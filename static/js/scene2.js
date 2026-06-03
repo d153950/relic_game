@@ -151,15 +151,14 @@ function initScene2() {
     allMatched = true;
     lock(500);
 
+    showHint('点击上釉彩');
     setTimeout(() => {
       clearAllDialogs();
       showDialog(dialogs.matched.text, dialogs.matched.pos, 3000);
       // 3秒后标签和对话框都消失
       setTimeout(() => {
         clearAllDialogs();
-        // 移除所有已匹配的标记
         objectLayer.querySelectorAll('.color-label.matched, .color-label[style*="border-style: solid"]').forEach(el => el.remove());
-        showHint('点击上釉彩');
       }, 3000);
     }, 400);
   }

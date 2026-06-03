@@ -130,8 +130,9 @@ function initScene7() {
   }
 
   function completeCleaning() {
+    if (phase !== 0) return;
     phase = 1;
-    hideHint();
+    showHint('点击继续');
     playSFX('wipe.mp3', 2000);
 
     canvas.style.transition = 'opacity 0.5s';
@@ -167,10 +168,10 @@ function initScene7() {
     if (isLocked()) return;
     gameContainer.removeEventListener('click', onClickHero);
     gameContainer._scene7Handler = null;
-    hideHint();
 
     clearAllDialogs();
     showDialog(dialogs.hero.text, dialogs.hero.pos, dialogs.hero.duration);
+    hideHint();
 
     // 主角对话期间点击可直接切换
     gameContainer.addEventListener('click', function skipToNext() {

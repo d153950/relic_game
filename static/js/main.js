@@ -319,6 +319,8 @@ function initScene10() {
   let idx = 0;
   let finished = false;
 
+  showHint('点击继续');
+
   function nextDialog() {
     if (isLocked() || finished) return;
     if (idx >= dialogs.length) {
@@ -326,7 +328,7 @@ function initScene10() {
       gameContainer.removeEventListener('click', nextDialog);
       gameContainer._scene10Handler = null;
       clearAllDialogs();
-      // 最后一句后通关
+      hideHint();
       setTimeout(() => endGame(), 2000);
       return;
     }

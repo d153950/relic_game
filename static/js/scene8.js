@@ -118,9 +118,8 @@ function initScene8() {
 
     if (correct) {
       hideHint();
-      lock(500);
 
-      // 保持2秒再消失
+      // 保持2秒自动切换
       setTimeout(() => {
         bubbleEls.forEach(el => {
           el.style.transition = 'opacity 0.6s';
