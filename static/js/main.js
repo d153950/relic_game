@@ -33,7 +33,7 @@ var currentSFX = null;
 
 function playBGM(src) {
   if (bgMusic) { bgMusic.pause(); bgMusic = null; }
-  bgMusic = new Audio('/sound/' + src);
+  bgMusic = new Audio('sound/' + src);
   bgMusic.volume = 0.5;
   bgMusic.currentTime = 17;
   bgMusic.play().catch(function() {});
@@ -50,7 +50,7 @@ function stopBGM() {
 
 function playSFX(src, duration) {
   if (currentSFX) { currentSFX.pause(); currentSFX = null; }
-  var sfx = new Audio('/sound/' + src);
+  var sfx = new Audio('sound/' + src);
   sfx.volume = 0.7;
   currentSFX = sfx;
   sfx.play().catch(function() {});
@@ -166,7 +166,7 @@ function switchScene(sceneNum) {
 
   const cfg = SCENES[sceneNum];
   if (cfg && cfg.bg) {
-    bgImg.src = `/material/scene/${cfg.bg}`;
+    bgImg.src = `material/scene/${cfg.bg}`;
   }
 
   fadeTransition(() => {
@@ -245,7 +245,7 @@ function hideHint() {
 /** 创建操作对象图片 */
 function createObject(src, id, opts = {}) {
   const img = document.createElement('img');
-  img.src = `/material/cup/${src}`;
+  img.src = `material/cup/${src}`;
   img.className = 'object-img';
   if (id) img.id = id;
   if (opts.draggable) {
@@ -290,7 +290,7 @@ function runScene456() {
     }
     currentIdx = i;
     if (i === 0) playSFX('war.mp3', 9000);
-    bgImg.src = `/material/scene/${seq[i].bg}`;
+    bgImg.src = `material/scene/${seq[i].bg}`;
     autoTimer = setTimeout(() => play(i + 1), seq[i].duration);
   }
 

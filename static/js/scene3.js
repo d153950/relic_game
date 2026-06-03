@@ -18,7 +18,7 @@ function initScene3() {
   });
 
   clothImg = document.createElement('img');
-  clothImg.src = '/material/cloth.png';
+  clothImg.src = 'material/cloth.png';
   clothImg.id = 'cloth-s3';
   clothImg.draggable = true;
   clothImg.style.cssText = 'position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);width:min(900px,70vw);z-index:3;cursor:grab;';

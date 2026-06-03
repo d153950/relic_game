@@ -39,7 +39,7 @@ function initScene7() {
   var stainOriginalData = null;
   var totalStainPixels = 0;
   const stainImg = new Image();
-  stainImg.src = '/material/stain.png';
+  stainImg.src = 'material/stain.png';
   stainImg.onload = () => {
     ctx.drawImage(stainImg, 0, 0, canvas.width, canvas.height);
     // 保存原始stain像素数据
