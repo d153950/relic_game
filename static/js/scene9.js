@@ -19,13 +19,14 @@ function initScene9() {
   var preDialogs = [dialogs.d1, dialogs.d2, dialogs.d3];
   var idx = 0;
   var timer = null;
-  var done = false;
+  var phaseDone = false;
 
   function showNext() {
-    if (done) return;
+    if (phaseDone) return;
     clearTimeout(timer);
     if (idx >= preDialogs.length) {
-      done = true;
+      phaseDone = true;
+      gameContainer.removeEventListener('click', onGameClick);
       showBidInput();
       return;
     }
@@ -36,8 +37,7 @@ function initScene9() {
   }
 
   function onGameClick(e) {
-    if (done) return;
-    if (isLocked()) return;
+    if (phaseDone || isLocked()) return;
     clearTimeout(timer);
     showNext();
   }
@@ -49,9 +49,9 @@ function initScene9() {
 
   // ==================== 输入框 ====================
   function showBidInput() {
-    gameContainer.removeEventListener('click', onGameClick);
     clearAllDialogs();
     showHint('估价竞拍');
+    uiLayer.innerHTML = '';
 
     var container = document.createElement('div');
     container.style.cssText = 'position:absolute;left:50%;bottom:12%;transform:translateX(-50%);z-index:10;text-align:center;';
@@ -79,19 +79,26 @@ function initScene9() {
     uiLayer.appendChild(container);
     input.focus();
 
+    var bidDone = false;
+
     function submitBid() {
+      if (bidDone) return;
       var val = parseFloat(input.value);
       if (isNaN(val) || val < 1.6 || val > 4.6) return;
-      container.remove();
-      clearAllDialogs();
 
       if (val > 2.5) {
+        container.remove();
+        clearAllDialogs();
         showErrorDialog(dialogs.high);
       } else if (val < 2.5) {
+        container.remove();
+        clearAllDialogs();
         showErrorDialog(dialogs.low);
       } else {
+        bidDone = true;
         container.remove();
         hideHint();
+        clearAllDialogs();
         showWinSequence();
       }
     }
@@ -100,7 +107,7 @@ function initScene9() {
     input.addEventListener('keydown', function(e) { if (e.key === 'Enter') submitBid(); });
   }
 
-  // 错误提示：点击消失或3秒自动消失
+  // 错误提示
   function showErrorDialog(d) {
     clearAllDialogs();
     showDialog(d.text, d.pos, 0);
@@ -143,8 +150,7 @@ function initScene9() {
     }
 
     function onWinClick(e) {
-      if (wDone) return;
-      if (isLocked()) return;
+      if (wDone || isLocked()) return;
       clearTimeout(wTimer);
       showWin();
     }
