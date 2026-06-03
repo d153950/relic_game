@@ -21,7 +21,7 @@ function initScene1() {
     transform: 'translate(-50%, -50%)',
     width: 'min(500px, 50vw)',
   });
-  showHint('点击杯子，开始制瓷');
+  showHint('点击制作');
 
   // === 步骤0: 点击p1 -> p2 ===
   cupImg.addEventListener('click', function step0() {
@@ -71,7 +71,7 @@ function initScene1() {
   // === Canvas涂抹 ===
   function enterDrawPhase() {
     currentPhase = 2;
-    showHint('用鼠标沿虚线涂抹，勾勒青花线条');
+    showHint('拖动淡描青花');
 
     var rect = cupImg.getBoundingClientRect();
     var cr = gameContainer.getBoundingClientRect();
@@ -189,7 +189,7 @@ function initScene1() {
     if (canvas) { canvas.style.transition = 'opacity 0.5s'; canvas.style.opacity = '0'; setTimeout(function() { canvas.remove(); }, 500); }
     cupImg.src = '/material/cup/p4.png';
     setTimeout(function() {
-      showHint('点击杯子继续');
+      showHint('点击上釉');
       cupImg.addEventListener('click', function clickP4() {
         if (isLocked() || currentPhase !== 3) return;
         cupImg.removeEventListener('click', clickP4);
@@ -197,7 +197,7 @@ function initScene1() {
         cupImg.src = '/material/cup/p5.png';
         clearAllDialogs();
         showDialog(dialogs.d6.text, dialogs.d6.pos, dialogs.d6.duration);
-        showHint('将杯子拖到右侧窑中');
+        showHint('向右拖动烧制');
         enterDragPhase();
       });
     }, 600);

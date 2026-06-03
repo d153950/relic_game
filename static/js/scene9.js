@@ -51,6 +51,7 @@ function initScene9() {
   function showBidInput() {
     gameContainer.removeEventListener('click', onGameClick);
     clearAllDialogs();
+    showHint('估价竞拍');
 
     var container = document.createElement('div');
     container.style.cssText = 'position:absolute;left:50%;bottom:12%;transform:translateX(-50%);z-index:10;text-align:center;';
@@ -89,6 +90,7 @@ function initScene9() {
       } else if (val < 2.5) {
         showErrorDialog(dialogs.low);
       } else {
+        hideHint();
         showWinSequence();
       }
     }

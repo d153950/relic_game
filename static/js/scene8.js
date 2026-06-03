@@ -89,7 +89,22 @@ function initScene8() {
     });
   });
 
-  showHint('按时间顺序排列（早在上，晚在下）');
+  showHint('拖动排序');
+
+  // 箭头+文字
+  var arrowContainer = document.createElement('div');
+  arrowContainer.style.cssText = 'position:absolute;right:8%;top:18%;height:80%;z-index:5;display:flex;flex-direction:column;align-items:center;';
+  var arrowLine = document.createElement('div');
+  arrowLine.style.cssText = 'width:2px;flex:1;background:#ffffff;';
+  var arrowHead = document.createElement('div');
+  arrowHead.style.cssText = 'width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:12px solid #ffffff;';
+  var arrowText = document.createElement('div');
+  arrowText.textContent = '进入现代';
+  arrowText.style.cssText = 'writing-mode:vertical-rl;color:#ffffff;font-family:var(--font-title);font-size:1.5rem;letter-spacing:0.2em;margin-top:0.5rem;';
+  arrowContainer.appendChild(arrowHead);
+  arrowContainer.appendChild(arrowLine);
+  arrowContainer.appendChild(arrowText);
+  objectLayer.appendChild(arrowContainer);
 
   // ==================== 检查排序 ====================
   function checkOrder() {
@@ -111,8 +126,11 @@ function initScene8() {
           el.style.transition = 'opacity 0.6s';
           el.style.opacity = '0';
         });
+        arrowContainer.style.transition = 'opacity 0.6s';
+        arrowContainer.style.opacity = '0';
         setTimeout(() => {
           bubbleEls.forEach(el => el.remove());
+          arrowContainer.remove();
           switchScene(9);
         }, 800);
       }, 2000);

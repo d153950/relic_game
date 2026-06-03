@@ -51,7 +51,7 @@ function initScene7() {
     }
   };
 
-  showHint('用鼠标涂抹，清理杯上污渍');
+  showHint('拖动清理');
 
   // ==================== 擦除事件 ====================
   canvas.addEventListener('mousedown', startErase);

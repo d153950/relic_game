@@ -75,6 +75,8 @@ function initScene2() {
     });
   });
 
+  showHint('拖动标签，匹配矿彩');
+
   // ==================== 创建标签（顺序打乱，X中轴对齐颜料团） ====================
   const paintXValues = Object.values(PAINT_SPOTS).map(p => p.x);
   const shuffledColors = [...LABELS].sort(() => Math.random() - 0.5);
@@ -157,7 +159,7 @@ function initScene2() {
         clearAllDialogs();
         // 移除所有已匹配的标记
         objectLayer.querySelectorAll('.color-label.matched, .color-label[style*="border-style: solid"]').forEach(el => el.remove());
-        showHint('点击杯胎，开始填彩');
+        showHint('点击上釉彩');
       }, 3000);
     }, 400);
   }
@@ -170,6 +172,7 @@ function initScene2() {
 
     cupImg.src = '/material/cup/p7.png';
     playSFX('paint.mp3', 3000);
+    showHint('点击上釉彩');
     clearAllDialogs();
     showDialog(dialogs.colored.text, dialogs.colored.pos, dialogs.colored.duration);
 
@@ -212,7 +215,7 @@ function initScene2() {
 
     // 动画完成后提示拖拽
     setTimeout(() => {
-      showHint('将上彩后的杯子拖到托盘中');
+      showHint('拖动交付');
       cupImg.classList.add('draggable');
       cupImg.draggable = true;
 

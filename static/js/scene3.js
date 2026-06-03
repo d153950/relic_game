@@ -24,7 +24,7 @@ function initScene3() {
   clothImg.style.cssText = 'position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);width:min(900px,70vw);z-index:3;cursor:grab;';
   objectLayer.appendChild(clothImg);
 
-  showHint('向左拖动红布，揭开真容');
+  showHint('拖动呈上');
 
   // === 红布拖动 ===
   var clothStartX = 0;
@@ -83,7 +83,7 @@ function initScene3() {
     clothImg.style.opacity = '0';
     setTimeout(function() { clothImg.remove(); }, 600);
     setTimeout(function() {
-      showHint('将鸡缸杯献给贵妃');
+      showHint('拖动呈上');
       cupImg.classList.add('draggable');
       cupImg.draggable = true;
       setupCupDrag();
@@ -121,8 +121,8 @@ function initScene3() {
       setTimeout(function() { cupImg.remove(); }, 600);
       cupDelivered = true;
       playSFX('porcelain.mp3', 5000);
+      hideHint();
       setTimeout(function() {
-        showHint('点击屏幕聆听对话');
         gameContainer.addEventListener('click', function startClick() {
           gameContainer.removeEventListener('click', startClick);
           startDialogSequence();
