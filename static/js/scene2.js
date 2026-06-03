@@ -90,7 +90,7 @@ function initScene2() {
     // X中轴对齐颜料团，底部排列
     el.style.cssText += `
       left: ${paintXValues[index]}%;
-      bottom: 6%;
+      bottom: 12%;
       transform: translateX(-50%);
     `;
     objectLayer.appendChild(el);
@@ -168,11 +168,10 @@ function initScene2() {
   cupImg.addEventListener('click', function onClickCup() {
     if (isLocked() || !allMatched) return;
     lock(500);
-    hideHint();
 
     cupImg.src = '/material/cup/p7.png';
     playSFX('paint.mp3', 3000);
-    showHint('点击上釉彩');
+    hideHint();
     clearAllDialogs();
     showDialog(dialogs.colored.text, dialogs.colored.pos, dialogs.colored.duration);
 
@@ -183,6 +182,7 @@ function initScene2() {
       if (isLocked()) return;
       lock(500);
       clearAllDialogs();
+      showHint('拖动交付');
       cupImg.removeEventListener('click', onClickP7);
       enterTrayPhase();
     });

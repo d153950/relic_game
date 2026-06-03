@@ -90,6 +90,7 @@ function initScene9() {
       } else if (val < 2.5) {
         showErrorDialog(dialogs.low);
       } else {
+        container.remove();
         hideHint();
         showWinSequence();
       }

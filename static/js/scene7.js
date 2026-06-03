@@ -140,7 +140,6 @@ function initScene7() {
 
     setTimeout(() => {
       clearAllDialogs();
-      showHint('点击屏幕继续');
       gameContainer.addEventListener('click', onClickFriend);
       gameContainer._scene7Handler = onClickFriend;
     }, 600);

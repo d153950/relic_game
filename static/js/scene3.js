@@ -78,12 +78,10 @@ function initScene3() {
   function doRemoveCloth() {
     if (clothRemoved) return;
     clothRemoved = true;
-    hideHint();
     clothImg.style.transition = 'opacity 0.6s';
     clothImg.style.opacity = '0';
     setTimeout(function() { clothImg.remove(); }, 600);
     setTimeout(function() {
-      showHint('拖动呈上');
       cupImg.classList.add('draggable');
       cupImg.draggable = true;
       setupCupDrag();
@@ -115,18 +113,15 @@ function initScene3() {
     zone.addEventListener('drop', function(e) {
       e.preventDefault();
       zone.remove();
-      hideHint();
       cupImg.style.transition = 'opacity 0.6s';
       cupImg.style.opacity = '0';
       setTimeout(function() { cupImg.remove(); }, 600);
       cupDelivered = true;
       playSFX('porcelain.mp3', 5000);
-      hideHint();
       setTimeout(function() {
-        gameContainer.addEventListener('click', function startClick() {
-          gameContainer.removeEventListener('click', startClick);
-          startDialogSequence();
-        });
+        showHint('点击继续');
+        // 第一轮对话自动触发
+        startDialogSequence();
       }, 900);
     });
   }

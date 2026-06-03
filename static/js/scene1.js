@@ -28,17 +28,11 @@ function initScene1() {
     if (isLocked()) return;
     cupImg.removeEventListener('click', step0);
     cupImg.src = '/material/cup/p2.png';
-    hideHint();
-    showHint('再次点击杯子');
     // 步骤1: 再次点击 -> 对话1
     cupImg.addEventListener('click', function step1(e) {
       e.stopPropagation();
-      console.log('step1 triggered, locked=' + isLocked());
-      if (isLocked()) return;
       cupImg.removeEventListener('click', step1);
-      hideHint();
       clearAllDialogs();
-      console.log('showing dialog1');
       showDialog(dialogs.d1.text, dialogs.d1.pos, 0);
       // 步骤2: 点击 -> 对话2(替换对话1)
       gameContainer.addEventListener('click', function step2() {

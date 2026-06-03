@@ -50,7 +50,7 @@ function initScene8() {
     el.draggable = true;
     el.dataset.id = bubble.id;
     el.dataset.order = bubble.order;
-    el.style.top = `${18 + index * 20}%`;
+    el.style.top = `${10 + index * 18}%`;
     el.innerHTML = `
       <span class="bubble-year">${bubble.year}</span>，${bubble.title}<br>
       <span style="font-size:0.8rem;color:var(--ink);">${bubble.text}</span>
@@ -93,7 +93,7 @@ function initScene8() {
 
   // 箭头+文字
   var arrowContainer = document.createElement('div');
-  arrowContainer.style.cssText = 'position:absolute;right:8%;top:18%;height:80%;z-index:5;display:flex;flex-direction:column;align-items:center;';
+  arrowContainer.style.cssText = 'position:absolute;right:8%;top:10%;height:72%;z-index:5;display:flex;flex-direction:column;align-items:center;';
   var arrowLine = document.createElement('div');
   arrowLine.style.cssText = 'width:2px;flex:1;background:#ffffff;';
   var arrowHead = document.createElement('div');
